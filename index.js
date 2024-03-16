@@ -1,6 +1,6 @@
 import MUSCLES from './data/muscles.json' assert { type: 'json' };
 import axios from 'axios';
-import { parse } from 'node-html-parser';
+import { parse, valid } from 'node-html-parser';
 import fs from 'fs';
 
 async function wait(delay) {
@@ -15,14 +15,13 @@ async function getData(muscleSlug, page = 1) {
             params: {
                 ajax: 1, // To return the html portion that we need
                 did: 4, // Order from A-Z
-                page
+                page: page === 1 ? undefined : page
             }
         })
     
         return data?.view;
     } catch (e) {
-        console.error("Error getting data", e);
-        return '';
+        console.error("Error getting data", e.message);
     }
 }
 
@@ -37,6 +36,10 @@ async function fetchAndCleanHtml(muscleSlug, page) {
 }
 
 function getListContainerElementFromHtml(html) {
+    if (!valid(html)) {
+        console.error('Invalid html data');
+        return null;
+    }
     const root = parse(html);
     return root.querySelector('.grid-x.grid-margin-x.grid-margin-y');
 }
@@ -79,13 +82,17 @@ function getEquipmentsFromExercises(exercises) {
     const equipments = [];
 
     function equipmentIsInArray(equipmentName) {
-        return equipments.find(e => e.slug === equipmentName);
+        return equipments.find(e => e.slug === formatNameToSlug(equipmentName));
+    }
+
+    function formatNameToSlug(name) {
+        return name?.replaceAll(' ', '-').toLowerCase();
     }
 
     exercises.forEach(exercise => {
-        if (!equipmentIsInArray(exercise.equipment)) {
+        if (exercise.equipment && !equipmentIsInArray(exercise.equipment)) {
             equipments.push({
-                slug: exercise.equipment?.replaceAll(' ', '-').toLowerCase(),
+                slug: formatNameToSlug(exercise.equipment),
                 name: exercise.equipment.charAt(0).toUpperCase() + exercise.equipment.slice(1)
             });
         }
@@ -95,7 +102,7 @@ function getEquipmentsFromExercises(exercises) {
 }
 
 function saveDataToFile(data, filename) {
-    fs.writeFileSync(`./data/${filename}`, JSON.stringify(data, null, 2));
+    fs.writeFileSync(`./data/${filename}`, JSON.stringify(data, null, 4));
 }
 
 async function main() {
