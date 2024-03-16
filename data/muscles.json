@@ -1,0 +1,18 @@
+[
+    { "id": 1, "slug": "abs", "group": "abs" },
+    { "id": 3, "slug": "biceps", "group": "biceps" },
+    { "id": 4, "slug": "calves", "group": "legs" },
+    { "id": 5, "slug": "chest", "group": "chest" },
+    { "id": 6, "slug": "forearms", "group": "forearms" },
+    { "id": 7, "slug": "glutes", "group": "legs" },
+    { "id": 8, "slug": "hamstrings", "group": "legs" },
+    { "id": 9, "slug": "hip-flexors", "group": "legs" },
+    { "id": 10, "slug": "lats", "group": "back" },
+    { "id": 11, "slug": "lower-back", "group": "back" },
+    { "id": 12, "slug": "middle-back", "group": "back" },
+    { "id": 13, "slug": "obliques", "group": "abs" },
+    { "id": 14, "slug": "quads", "group": "legs" },
+    { "id": 15, "slug": "shoulders", "group": "shoulders" },
+    { "id": 16, "slug": "traps", "group": "shoulders" },
+    { "id": 17, "slug": "triceps", "group": "triceps" }
+]

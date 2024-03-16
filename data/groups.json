@@ -1,0 +1,10 @@
+[
+    { "id": 1, "slug": "abs", "name": "Abs" },
+    { "id": 2, "slug": "legs", "name": "Legs" },
+    { "id": 3, "slug": "biceps", "name": "Biceps" },
+    { "id": 4, "slug": "chest", "name": "Chest" },
+    { "id": 5, "slug": "forearms", "name": "Forearms" },
+    { "id": 6, "slug": "back", "name": "Back" },
+    { "id": 7, "slug": "shoulders", "name": "Shoulders" },
+    { "id": 8, "slug": "triceps", "name": "Triceps" }
+]
