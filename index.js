@@ -70,7 +70,7 @@ function getExercisesFromListContainerElement(listContainerElement, muscleId) {
             image: coverImage,
             externalLink: externalExercisePage,
             mechanic: metadataObject.mechanics,
-            equipment: metadataObject.equipment,
+            equipment: slugify(metadataObject.equipment),
             muscleId: muscleId
         });
     })
@@ -78,21 +78,21 @@ function getExercisesFromListContainerElement(listContainerElement, muscleId) {
     return exercises;
 }
 
+function slugify(text) {
+    return text?.replaceAll(' ', '-').toLowerCase()
+}
+
 function getEquipmentsFromExercises(exercises) {
     const equipments = [];
 
     function equipmentIsInArray(equipmentName) {
-        return equipments.find(e => e.slug === formatNameToSlug(equipmentName));
-    }
-
-    function formatNameToSlug(name) {
-        return name?.replaceAll(' ', '-').toLowerCase();
+        return equipments.find(e => e.slug === slugify(equipmentName));
     }
 
     exercises.forEach(exercise => {
         if (exercise.equipment && !equipmentIsInArray(exercise.equipment)) {
             equipments.push({
-                slug: formatNameToSlug(exercise.equipment),
+                slug: slugify(exercise.equipment),
                 name: exercise.equipment.charAt(0).toUpperCase() + exercise.equipment.slice(1)
             });
         }
