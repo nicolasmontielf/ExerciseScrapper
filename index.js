@@ -44,7 +44,7 @@ function getListContainerElementFromHtml(html) {
     return root.querySelector('.grid-x.grid-margin-x.grid-margin-y');
 }
 
-function getExercisesFromListContainerElement(listContainerElement, muscleId) {
+function getExercisesFromListContainerElement(listContainerElement, muscleSlug) {
     const exercises = [];
     
     listContainerElement.querySelectorAll('.cell.small-12')?.forEach(exercise => {
@@ -71,7 +71,7 @@ function getExercisesFromListContainerElement(listContainerElement, muscleId) {
             externalLink: externalExercisePage,
             mechanic: metadataObject.mechanics,
             equipment: slugify(metadataObject.equipment),
-            muscleId: muscleId
+            muscle: muscleSlug
         });
     })
 
@@ -91,9 +91,11 @@ function getEquipmentsFromExercises(exercises) {
 
     exercises.forEach(exercise => {
         if (exercise.equipment && !equipmentIsInArray(exercise.equipment)) {
+            const name = exercise.equipment.charAt(0).toUpperCase() + exercise.equipment.slice(1);
             equipments.push({
+                id: equipments.length + 1,
                 slug: slugify(exercise.equipment),
-                name: exercise.equipment.charAt(0).toUpperCase() + exercise.equipment.slice(1)
+                name: name.replaceAll('-', ' ')
             });
         }
     });
@@ -128,7 +130,7 @@ async function main() {
                 break;
             }
 
-            const exercisesList = getExercisesFromListContainerElement(listContainerElement, muscle.id);
+            const exercisesList = getExercisesFromListContainerElement(listContainerElement, muscle.slug);
             exercises = exercises.concat(exercisesList);
 
             console.log(`Fetched ${muscle.slug} from page ${page}...`)
