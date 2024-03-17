@@ -39,7 +39,7 @@ function mapExercises(exercise) {
         external_link: exercise.externalLink,
         mechanic: exercise.mechanic,
         muscle_id: MUSCLES.find(m => m.slug === exercise.muscle)?.id,
-        equipment_id: EQUIPMENTS.find(e => e.slug === exercise.equipment)?.id,
+        equipment_id: EQUIPMENTS.find(e => e.slug === exercise.equipment)?.id ?? EQUIPMENTS.find(e => e.slug === 'no-equipment')?.id
     }
 }
 

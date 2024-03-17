@@ -99,6 +99,12 @@ function getEquipmentsFromExercises(exercises) {
             });
         }
     });
+    
+    equipments.push({
+        id: equipments.length + 1,
+        slug: 'no-equipment',
+        name: 'No Equipment'
+    })
 
     return equipments;
 }
