@@ -9,19 +9,19 @@ async function wait(delay) {
 }
 
 // Get the data from the website and returns a plain html
-async function getData(muscleSlug, page = 1) {
+async function getData(muscleSlug, page = 0) {
     try {
         const { data } = await axios.get(`https://www.muscleandstrength.com/exercises/${muscleSlug}`, {
             params: {
                 ajax: 1, // To return the html portion that we need
                 did: 4, // Order from A-Z
-                page: page === 1 ? undefined : page
+                page: page === 0 ? undefined : page
             }
         })
     
         return data?.view;
     } catch (e) {
-        console.error("Error getting data", e.message);
+        console.error("Error getting data", e.message, muscleSlug, page);
     }
 }
 
@@ -119,7 +119,7 @@ async function main() {
 
     for (const muscle of MUSCLES) {
         console.log(`----- Fetching exercises for ${muscle.slug} -----`)
-        let page = 1;
+        let page = 0;
 
         while (true) {
             await wait(5000);
